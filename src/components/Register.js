@@ -17,7 +17,7 @@ const Register = () => {
         password,
         role,
       });
-      //   console.log(result);
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

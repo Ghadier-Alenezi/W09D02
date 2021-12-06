@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getTasks } from "./../reducers/tasks";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "./../reducers/login.js";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
 
@@ -11,14 +14,22 @@ const Home = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
 
+  const state = useSelector((state) => {
+    return {
+      logout: state,
+    };
+  });
+  const dispatch = useDispatch();
+
   const allTasks = async () => {
     try {
-      const result = await axios.get(`${BASE_URL}/tasks`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setTasks(result.data);
+      const result = await axios.get(`${BASE_URL}/tasks`);
+      const data = {
+        getTasks: tasks.data,
+      };
+      console.log(tasks.data);
+
+      dispatch(tasks(data));
     } catch (error) {
       console.log(error);
     }
@@ -72,9 +83,8 @@ const Home = () => {
 
   //   log out user
   const logOut = () => {
-    
-    localStorage.clear();
-    navigate("/login");
+    dispatch(logout());
+    navigate("/");
   };
 
   useEffect(() => {

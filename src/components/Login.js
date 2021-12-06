@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import {login} from "./../reducers/login.js"
+import { login } from "./../reducers/login.js";
 import { useSelector, useDispatch } from "react-redux";
 
 const BASE_URL = process.env.REACT_APP_BASE_URL;
@@ -28,7 +28,7 @@ const Login = () => {
         {
           email,
           password,
-        },
+        }
         // {
         //   headers: {
         //     Authorization: `Bearer ${token}`,
@@ -44,6 +44,7 @@ const Login = () => {
       };
 
       dispatch(login(data));
+      navigate("/home");
 
     } catch (error) {
       console.log(error);
